@@ -1,0 +1,213 @@
+{% if product.metafields.isd.json_data != blank %} 
+{% for collection in product.collections %}
+{% if collection.title contains 'Garden Centre' %}
+    {% assign no_timer = true %}
+    {% break %}
+{% endif %}
+{% endfor %}
+
+<div class="countdown-container" {% if no_timer %} style="display: none;" {% endif %}>
+<div class="stock-message" id="pp-countdown-start-message">
+  {% if product.type contains 'Christmas' or  product.type contains 'christmas' %}
+    <b>CHRISTMAS CLEARANCE!</b><br>
+    Use code <span class="stock-count"><b>LASTCHANCE10</b></span> to unlock an 
+    <span class="stock-count"><b>EXTRA 10% OFF</b> on Christmas Products!</span>
+  {% elsif product.type == 'Fuel' %}
+    <b>FUEL CLEARANCE!</b><br>
+    Use code <span class="stock-count"><b>CLEAROUT15</b></span> for 
+    <span class="stock-count"><b>EXTRA 15% OFF</b> on Fuel Products!</span>
+{% elsif 
+        product.type == 'Benches' or
+        product.type == '4 Seater Set' or
+        product.type ==  '6 Seater Set' or 
+        product.type == '8 Seater Set' or 
+        product.type == 'Cube Set' or 
+        product.type == 'Bistros' or 
+        product.type == 'Sofa Set' or
+        product.type == 'Corner Sets' or 
+        product.type == 'Cube Sets' or
+        product.type == 'Garden Armchairs' or
+        product.type == 'Loungers' or
+        product.type == 'Swings & Hanging Chairs' or
+        product.type == 'Pizza Ovens' or
+        product.type == 'BBQ Accessories' or
+        product.type == 'Heaters' or
+        product.type == 'BBQ' or
+        product.type == 'Pergola'
+%}
+  <b>EARLY BIRD SALE!</b><br>
+  Use code <span class="stock-count"><b>PRE15</b></span> for 
+  <span class="stock-count"><b>EXTRA 15% OFF</b> on Outdoor Products!</span>
+{% else %}
+    <span class="stock-count"><b>Hurry! Sale ends in:</b></span> <br>
+{% endif %}
+</div>
+<div id="pp-countdown-end-message">
+  <b>COMEBACK WITH US FOR MORE UPDATE!</b>
+</div>
+<div class="progress-bar">
+  <div class="progress"></div>
+</div>
+<div class="countdown-timer">
+  <div class="time-box">
+    <span id="c-days">00</span><br>Days
+  </div>
+  <div class="time-box">
+    <span id="c-hours">00</span><br>Hours
+  </div>
+  <div class="time-box">
+    <span id="c-minutes">00</span><br>Mins
+  </div>
+  <div class="time-box">
+    <span id="c-seconds">00</span><br>Secs
+  </div>
+</div>
+</div>
+
+<style>
+:root{
+{% if product.type contains 'Christmas' or  product.type contains 'christmas' %}
+  --progress-color: linear-gradient(90deg, rgba(255,167,86,1) 0%, rgba(203,32,32,1) 100%);
+  --progress-icon: url('https://cdn.shopify.com/s/files/1/0561/5901/0886/files/Clock.png');
+{% elsif product.type == 'Fuel'%}
+  --progress-color: linear-gradient(90deg, rgba(72,187,90,1) 0%, rgba(43,113,54,1) 100%);
+  --progress-icon: url('https://cdn.shopify.com/s/files/1/0561/5901/0886/files/fire-icon.png');
+{% else %}
+  /* --progress-color: linear-gradient(90deg, rgba(72,187,90,1) 0%, rgba(43,113,54,1) 100%);
+  --progress-icon: url('https://cdn.shopify.com/s/files/1/0561/5901/0886/files/squared-wait-save.png'); */
+  --progress-color: linear-gradient(90deg, rgba(255,167,86,1) 0%, rgba(203,32,32,1) 100%);
+  --progress-icon: url('https://cdn.shopify.com/s/files/1/0561/5901/0886/files/Clock.png');
+{% endif %}
+}
+#pp-countdown-end-message{
+  font-size: 19px;
+  margin: 8px 0;
+  display: none;
+}
+.countdown-container {
+  
+  text-align: center;
+  font-family: Arial, sans-serif;
+  max-width: 500px;
+  margin: 20px auto;
+  display: block;
+}
+
+.stock-message {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.stock-count {
+  color: #d9534f;
+}
+
+.progress-bar {
+  background-color: #e28888; /*background-color: #FFE31A; */
+  height: 10px;
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  /* background-color: #cb2020; #000; */
+  background: rgb(227,130,130);
+  background: var(--progress-color);
+  height: 100%;
+  width: 0%; /* Change this value dynamically in JavaScript */
+  border-radius: 5px;
+  position: relative;
+}
+.progress::after{
+  display: inline-block;
+  background-image: var(--progress-icon);
+  position: absolute;
+  width: 25px; 
+  aspect-ratio: 4/4;
+  right: -3%; top: 50%;
+  transform: translate(0, -50%);
+  background-size: 25px;
+  content: "";
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.5em;
+  clear: both;
+}
+
+.time-box {
+  text-align: center;
+  font-size:12px;
+  color:#b1b1b1;
+}
+
+#c-hours, #c-minutes, #c-days, #c-seconds {
+  font-size: 40px;
+      color: #6d7477;
+      font-weight: bold;
+}
+
+</style>
+<script>
+let product_countDownDateStart = new Date("February 01, 2025 00:00:00").getTime();
+{% if product.type contains 'Christmas' or  
+        product.type contains 'christmas' or
+        product.type == 'Fuel' or
+        product.type == 'Benches' or
+        product.type == '4 Seater Set' or
+        product.type ==  '6 Seater Set' or 
+        product.type == '8 Seater Set' or 
+        product.type == 'Cube Set' or 
+        product.type == 'Bistros' or 
+        product.type == 'Sofa Set' or
+        product.type == 'Corner Sets' or 
+        product.type == 'Cube Sets' or
+        product.type == 'Garden Armchairs' or
+        product.type == 'Loungers' or
+        product.type == 'Swings & Hanging Chairs' or
+        product.type == 'Pizza Ovens' or
+        product.type == 'BBQ Accessories' or
+        product.type == 'Heaters' or
+        product.type == 'BBQ' or
+        product.type == 'Pergola' or
+        product.type == 'Outdoor Side Tables'
+%}
+    let product_countDownDate = new Date("February 21, 2025 23:59:59").getTime();
+{% else %}
+    let product_countDownDate = new Date("February 21, 2025 23:59:59").getTime();
+{% endif %}
+
+let z = setInterval(function () {
+  let now = new Date().getTime();
+  let distance = product_countDownDate - now;
+  let totalDuration = product_countDownDate - product_countDownDateStart;
+
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("c-days").innerHTML = ("0" + days).slice(-2);
+  document.getElementById("c-hours").innerHTML = ("0" + hours).slice(-2);
+  document.getElementById("c-minutes").innerHTML = ("0" + minutes).slice(-2);
+  document.getElementById("c-seconds").innerHTML = ("0" + seconds).slice(-2);
+
+  let elapsedTime = now - product_countDownDateStart;
+      let progressPercentage = (elapsedTime / totalDuration) * 100;
+      $(".progress").css("width", progressPercentage + "%");
+
+  if (distance < 0) {
+    clearInterval(z);
+    document.getElementById("pp-countdown-start-message").style.display = "none";
+    document.getElementById("pp-countdown-end-message").style.display = "block";
+    $('#c-days,#c-hours,#c-minutes,#c-seconds').html('0');
+    $(".progress").css({width: '100%'});
+  }
+}, 1000);
+</script>
+{% endif %}
+
