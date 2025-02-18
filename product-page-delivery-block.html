@@ -1,0 +1,824 @@
+<style>
+    .cc-accordion-item {
+        width: 100%;
+        padding-left: 15px;
+    }
+    img.confidence-section {
+        width: 75px;
+        height: 75px;
+        padding-right: 10px;
+    }
+    .confidence-heading {
+        margin-bottom: 5px;
+        font-weight: bold;
+        padding-top: 10px;
+    }
+    .confidence-tagline {
+        font-size: 0.8em;
+        color: gray;
+        font-weight: normal;
+    }
+    .confidence-tagline-more {
+        font-size: 0.7em;
+        color: lightgray;
+    }
+    .confidence-tagline-more:hover {
+        color: #F9B928;
+    }
+    .confidence-content {
+        font-size: 0.75em;
+        color: black;
+    }
+    .stores-not-accordion-title {
+        display: block;
+        position: relative;
+        list-style: none;
+        padding: 15px 30px 15px 0;
+        cursor: pointer;
+    }
+    .stores-not-accordion-item {
+        background: #F9F9F9;
+    }
+    .stores-not-accordion-item:hover {
+        background: white;
+    }
+    .ThisIsFuelIconCertImages {
+        display: flex;
+        flex-direction: row;
+    }
+    .ThisIsFuelIconCertImages img {
+        max-height: 250px;
+    }
+    .fuelcertimg {
+        padding: 2.5px;
+    }
+    .button-container-col {
+        position: relative;
+        text-align: center;
+    }
+    .button-container-col .header-button {
+        color: #212b36cd;
+        background-color: #e0ba62bc;
+        text-decoration: none;
+        border: 1px solid;
+        padding: 8px 0;
+        border-radius: 5px;
+        position: relative;
+        max-width: 150px;
+    }
+    .button-container-col .header-button:hover {
+        background-color: #E0BA62;
+        box-shadow: 0px 3px 1px 1px #212B36;
+        transform: translateY(-3px);
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+    .popup-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+  
+    .timeline-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-top: 2px solid #ccc;
+        border-bottom: 2px solid #ccc;
+        margin: 20px 0;
+    }
+  
+    .timeline-event {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+        position: relative;
+    }
+  
+    .timeline-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+  
+    .timeline-content {
+        text-align: center;
+        font-size: 14px;
+    }
+  
+    .timeline-line {
+        position: absolute;
+        top: 25px;
+        height: 2px;
+        background-color: #3a3a3a;
+        z-index: -1;
+    }
+  
+    .timeline-line-left {
+        left: -25%;
+        width: 50%;
+    }
+  
+    .timeline-line-right {
+        right: -25%;
+        width: 50%;
+    }
+  
+    .timeline-icon-container {
+        display: flex;
+        align-items: center;
+    }
+  
+    .timeline-icon-container img {
+        margin: 0 10px;
+    }
+  </style>
+  
+  <div class="cc-accordion cc-initialized" data-allow-multi-open="false">
+    <details class="cc-accordion-item stores-not-accordion-item">
+        <summary class="stores-not-accordion-title confidence-item-title">
+            <a href="https://www.rw.ie/pages/our-stores" target="_blank">
+                <div style="display: flex; align-items: start; justify-content: start; font-size: 17px;">
+                    <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0511/5219/1678/files/stores-png.png?v=1676653949" alt="">
+                    <div style="line-height: 1em;">
+                        <h6 class="confidence-heading">36 Stores in the UK & Ireland.</h6>
+                        <span class="confidence-tagline">Click here to find the Rathwood store nearest you</span>
+                        <span class="confidence-tagline-more" style="color: #F9B928;">(more info)</span>
+                    </div>
+                </div>
+            </a>
+        </summary>
+    </details>
+  
+    {% for collection in product.collections %}
+        {% if collection.title contains 'Bistro' or collection.title contains 'Seater' or collection.title contains 'Sets' %}
+            <details class="cc-accordion-item">
+                <summary class="cc-accordion-item__title confidence-item-title">
+                    <div style="display: flex; align-items: start; justify-content: start; font-size: 17px;">
+                        <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0511/5219/1678/files/warranty-png.png?v=1676643922" alt="">
+                        <div style="line-height: 1em;">
+                            <h6 class="confidence-heading"><b>FREE</b> Structural Warranty</h6>
+                            <span class="confidence-tagline">We ensure our products are built to last <br>
+                                <span class="confidence-tagline-more" style="color: #F9B928;">(more info)</span>
+                            </span>
+                        </div>
+                    </div>
+                </summary>
+                <div class="cc-accordion-item__panel">
+                    <div class="cc-accordion-item__content">
+                        <p class="confidence-content">We provide a structural guarantee, in respect of structural defects resulting from faulty materials or workmanship of the structure of the product.</p>
+                        <p class="confidence-content">If you make a genuine claim under this guarantee in respect of any defects and the goods are returned to us in accordance with this guarantee, the faulty items will be repaired, made good or replaced at our discretion.</p>
+                        <p class="confidence-content">Please read through the full terms and conditions of the structural warranty for more information</p>
+                    </div>
+                </div>
+            </details>
+            {% break %}
+        {% endif %}
+    {% endfor %}
+  
+    <details class="cc-accordion-item">
+        <summary class="cc-accordion-item__title confidence-item-title">
+            <div style="display: flex; align-items: start; justify-content: start; font-size: 17px;">
+                <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0511/5219/1678/files/pricepromise-png.png?v=1676643922" alt="">
+                <div style="line-height: 1em;">
+                    <h6 class="confidence-heading">Price Promise</h6>
+                    <span class="confidence-tagline">Find the same product cheaper and we'll beat it<br>
+                        <span class="confidence-tagline-more" style="color: #F9B928;">(more info)</span>
+                    </span>
+                </div>
+            </div>
+        </summary>
+        <div class="cc-accordion-item__panel">
+            <div class="cc-accordion-item__content">
+                <h3 style="font-size:19px; margin: 0px; margin-bottom: 10px">You'll not find it cheaper anywhere!</h3>
+                <p class="confidence-content">We are confident that we will never be beaten on price, if you find the same set cheaper elsewhere, we'll not only match the price but give you an extra discount on top.</p>
+                <h3 style="font-size:19px; margin: 0px; margin-bottom: 10px">Terms & Conditions</h3>
+                <ul class="confidence-content">
+                    <li>Product must be available for sale online and for a new product (not factory refurbished or second hand).</li>
+                    <li>A link to the advertised price must be provided with any claim on this price promise. Prices must be inclusive of taxes and delivery costs.</li>
+                    <li>Products must be of the same currency in .com site and .ie site and uk sites and all partner sites.</li>
+                </ul>
+            </div>
+        </div>
+    </details>
+    {% if product.type contains 'Fuel' and product.title contains 'Kiln Dried' %}
+        <details class="cc-accordion-item">
+            <summary class="cc-accordion-item__title confidence-item-title">
+                <div style="display: flex; align-items: start; justify-content: start; font-size: 17px;">
+                    <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/Quality_Assured.jpg" alt="">
+                    <div style="line-height: 1em;">
+                        <h6 class="confidence-heading">Quality Assured</h6>
+                        <span class="confidence-tagline">Our RW Kiln Dried Fire Wood comes from PEFC®100% certified ethical forests.<br>
+                            <span class="confidence-tagline-more" style="color: #F9B928;">(more info)</span></span>
+                    </div>
+                </div>
+            </summary>
+            <div class="cc-accordion-item__panel">
+                <div class="cc-accordion-item__content">
+                    <h3 style="font-size:19px; margin: 0px; margin-bottom: 10px">The best quality fuel that we offer</h3>
+                    <p class="confidence-content">
+                        Our RW Kiln Dried Fire Wood comes from PEFC®100% certified ethical forests. To achieve the best quality, the wood undergoes cutting and splitting before being dried in specialised kilns to eliminate moisture from the wood. This has numerous benefits such as eliminating any disease and pests.<br><br><b>EPA registration NO. : F0148-01 – Rathwood Home & Garden World</b></n>
+                    </p>
+                    <div class="ThisIsFuelIconCertImages">
+                        <div class="fuelcertimg">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/forceDried-Hardwood-SIAwoodmill-RtB-Cert-DIGITAL.jpg">
+                        </div>
+                        <div class="fuelcertimg">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/PEFC.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </details>
+    {% endif %}
+  
+    <details class="cc-accordion-item">
+        <summary class="cc-accordion-item__title confidence-item-title">
+            <div style="display: flex; align-items: start; justify-content: start; font-size: 17px;">
+                {% if product.type contains 'Fuel' %}
+                    <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/Fuel_Delivery_Icon_d6494a70-26aa-491d-9ff6-52659cd88998.png" alt="">
+                {% else %}
+                    <img class="confidence-section" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/Delivery_Icon_c3667a67-00de-4feb-aa04-cb6553714f8c.png" alt="">
+                {% endif %}
+                <div style="line-height: 1em;">
+                    <h6 class="confidence-heading">Delivery Information</h6>
+                    <span class="confidence-tagline">Nationwide delivery<br>
+                        <span class="confidence-tagline-more" style="color: #F9B928;">(more info)</span>
+                    </span>
+                </div>
+            </div>
+        </summary>
+        <div class="cc-accordion-item__panel">
+            <div class="cc-accordion-item__content">
+                <div style="padding-right: 10px; text-align: justify;" data-mce-style="padding-right: 10px; text-align: justify;">
+                    <div style="background: #084d22; padding: 10px; margin-bottom: 40px; text-align: center; border-radius: 5px;" data-mce-style="background: #084d22; padding: 10px; margin-bottom: 40px; text-align: center; border-radius: 5px;">
+                        <h3 style="margin: 0px; color: white;" data-mce-style="margin: 0px; color: white;">Rathwood&nbsp;Delivery Information</h3>
+                    </div>
+                    <div style="padding: 5px; background: #F9F9F9; text-align: center;" data-mce-style="padding: 5px; background: #F9F9F9; text-align: center;">
+                        <h4 style="margin: 0; color: black;" data-mce-style="margin: 0; color: black;">Delivery options</h4>
+                    </div>
+                    
+                    {% assign showParcelDelivery = false %}
+                    {% assign showFleetDelivery = false %}
+                    {% assign showPalletDelivery = false %}
+                    {% assign showOtherDeliveries = false %}
+                    {% assign showFreeDelivery = false %}
+                    
+                    {% if collection.title contains 'Christmas Trees' or product.type contains 'Christmas' %}
+                        {% unless product.type == 'Real Christmas Tree' or 
+                                  product.selected_or_first_available_variant.sku == 'RATH-SCAN-10' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-SCAN-12' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-ICE-9' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-ICE-10'  %}
+                            {% assign showParcelDelivery = true %}
+                        {% else %}
+                            {% assign showFleetDelivery = true %}
+                        {% endunless %}
+                          
+                    {% endif %}
+  
+                    {% if collection.title contains 'Bistros' or
+                          product.type contains 'Bistros' or
+                          collection.title contains 'Benches' or
+                          product.type contains 'Benches' or
+                          collection.title contains 'Pizza Ovens' or
+                          product.type contains 'Pizza Ovens' or
+                          collection.title contains 'BBQ Accessories' or
+                          product.type contains 'BBQ Accessories' or
+                          collection.title contains 'Pizza Oven Accessories' or
+                          product.type contains 'Pizza Oven Accessories' or
+                          collection.title contains 'Covers' or
+                          product.type contains 'Covers' or
+                          collection.title contains 'Parasols' or
+                          product.type contains 'Parasols' or
+                          collection.title contains 'Bases' or
+                          product.type contains 'Bases' %}
+                        {% assign showParcelDelivery = true %}
+                    {% endif %}
+  
+                    {% if collection.title contains 'Hand Trolley Delivery' %}
+                        {% assign showFleetDelivery = true %}
+                    {% endif %}
+                    
+                    {% if collection.title contains 'Pallet' %}
+                        {% assign showPalletDelivery = true %}
+                    {% endif %}
+                    
+                    {% if product.type contains 'Fuel' or collection.title contains 'Individually Bagged Delivery' or collection.title contains 'Briquettes Delivery' %}
+                    {% unless product.tags contains 'Pallet_Delivery' %}
+                        {% assign showFleetDelivery = true %}
+                    {% endunless%}
+                        {% assign showPalletDelivery = true %}
+                    {% endif %}
+  
+                    {% if showParcelDelivery or showFleetDelivery or showPalletDelivery or showFreeDelivery %}
+                        {% assign showOtherDeliveries = false %}
+                    {% endif %}
+  
+                    {% unless collection.title contains 'Bistros' or
+                          product.type contains 'Bistros' or
+                          collection.title contains 'Benches' or
+                          product.type contains 'Benches' or
+                          collection.title contains 'Pizza Ovens' or
+                          product.type contains 'Pizza Ovens' or
+                          collection.title contains 'BBQ Accessories' or
+                          product.type contains 'BBQ Accessories' or
+                          collection.title contains 'Pizza Oven Accessories' or
+                          product.type contains 'Pizza Oven Accessories' or
+                          collection.title contains 'Covers' or
+                          product.type contains 'Covers' or
+                          collection.title contains 'Parasols' or
+                          product.type contains 'Parasols' or
+                          collection.title contains 'Bases' or
+                          product.type contains 'Bases' or
+                          collection.title contains 'Hand Trolley Delivery' or
+                          collection.title contains 'Pallet' or
+                          collection.title contains 'Individually Bagged Delivery' or 
+                          collection.title contains 'Briquettes' or
+                          product.type contains 'Fuel' or
+                          collection.title contains 'Christmas Trees' or
+                          product.type contains 'Christmas Tree' %}
+                        {% assign showOtherDeliveries = true %}
+                    {% endunless %}
+                    
+                    {% if showFreeDelivery %}
+    <!-- Free Delivery Section -->
+    <!-- Pallet Delivery Section for Other Headers -->
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/pallet-icon-1.png?v=1710326637" alt="pallet" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Pallet Delivery</strong><br>
+                                FREE delivery in 3-5 working days.
+                            </div>
+                        </div>
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="pallet-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="pallet-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="pallet-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Pallet Delivery Section -->
+  
+                        <!-- Fleet Delivery Section for Other Headers -->
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/fuel-del-icon.png?v=1710329285" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Fleet Delivery</strong><br>FREE delivery in 7-10 working days.
+                            </div>
+                        </div>
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="fleet-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Fleet Delivery Section -->
+                        <!-- End of Delivery Timeline for Free Delivery -->
+                    {% endif %}
+  
+                    {% if showParcelDelivery %}
+                        <!-- Parcel Delivery Section -->
+                        <div style="display: flex; align-items: center;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/parcel-icon.png?v=1720108731" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Parcel Delivery</strong><br>
+                                For Small Items or Christmas Products<br> This option is free and takes 4-6 working days.
+                            </div>
+                        </div>
+                        <!-- Delivery Timeline for Parcel Delivery -->
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="parcel-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="parcel-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="parcel-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="parcel-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="parcel-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="parcel-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Delivery Timeline -->
+                    {% endif %}
+  
+                    {% if showFleetDelivery %}
+                        {% if product.type contains 'Fuel' %}
+                            <!-- Fleet Delivery Section for Fuel -->
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/fuel-del-icon.png?v=1710329285" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                                <div>
+                                    <strong>Fuel Fleet Delivery</strong><br>€19 for delivery in 7-10 working days.
+                                </div>
+                            </div>
+                            <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                                <div class="timeline-event" id="fleet-order-placed" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                        <div class="timeline-line timeline-line-right"></div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="fleet-order-placed-date">Order placed</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-event" id="fleet-order-dispatches" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <div class="timeline-line timeline-line-left"></div>
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                        <div class="timeline-line timeline-line-right"></div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="fleet-order-dispatches-date">Order dispatches</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-event" id="fleet-order-delivered" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <div class="timeline-line timeline-line-left"></div>
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="fleet-order-delivered-date">Delivered!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Fleet Delivery Section -->
+                        {% elsif  product.type == 'Real Christmas Tree' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-SCAN-10' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-SCAN-12' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-ICE-9' or
+                                  product.selected_or_first_available_variant.sku == 'RATH-ICE-10' %}
+                         <!-- Fleet Delivery Section -->
+                         <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/fuel-del-icon.png?v=1710329285" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Fleet Delivery</strong><br>Free delivery in 7-10 working days.
+                            </div>
+                        </div>
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="fleet-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Fleet Delivery Section -->
+                        {% endif %}
+                    {% endif %}
+                    
+                    {% if showPalletDelivery %}
+                        {% if product.type contains 'Fuel' %}
+                            <!-- Pallet Delivery Section for Fuel -->
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/pallet-icon-1.png?v=1710326637" alt="pallet" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                                <div>
+                                    <strong>Fuel Pallet Delivery</strong><br>
+                                    For Fuel Orders<br>Free Delivery in 3-5 working days.
+                                </div>
+                            </div>
+                            <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                                <div class="timeline-event" id="pallet-order-placed" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                        <div class="timeline-line timeline-line-right"></div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="pallet-order-placed-date">Order placed</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-event" id="pallet-order-dispatches" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <div class="timeline-line timeline-line-left"></div>
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                        <div class="timeline-line timeline-line-right"></div>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="pallet-order-dispatches-date">Order dispatches</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-event" id="pallet-order-delivered" style="text-align: center; flex: 1;">
+                                    <div class="timeline-icon-container">
+                                        <div class="timeline-line timeline-line-left"></div>
+                                        <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <p id="pallet-order-delivered-date">Delivered!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Pallet Delivery Section -->
+                        {% endif %}
+                    {% endif %}
+                    
+                    {% if showOtherDeliveries %}
+                      <!-- Pallet Delivery Section for Other Headers -->
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/pallet-icon-1.png?v=1710326637" alt="pallet" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Pallet Delivery</strong><br>
+                                For Larger Furniture<br>€29 for delivery in 3-5 working days.
+                            </div>
+                        </div>
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="pallet-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="pallet-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="pallet-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="pallet-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Pallet Delivery Section -->
+  
+                        <!-- Fleet Delivery Section for Other Headers -->
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/fuel-del-icon.png?v=1710329285" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
+                            <div>
+                                <strong>Fleet Delivery</strong><br>€79 for delivery in 7-10 working days.
+                            </div>
+                        </div>
+                        <div class="timeline-container" style="border: 1px solid #ddd; padding: 10px; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                            <div class="timeline-event" id="fleet-order-placed" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/ordered-date.png?v=1720340365" alt="Order placed icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-placed-date">Order placed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-dispatches" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/dispatch.png?v=1720340364" alt="Order dispatches icon">
+                                    <div class="timeline-line timeline-line-right"></div>
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-dispatches-date">Order dispatches</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event" id="fleet-order-delivered" style="text-align: center; flex: 1;">
+                                <div class="timeline-icon-container">
+                                    <div class="timeline-line timeline-line-left"></div>
+                                    <img class="timeline-icon" src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/delivered.png?v=1720340365" alt="Order delivered icon">
+                                </div>
+                                <div class="timeline-content">
+                                    <p id="fleet-order-delivered-date">Delivered!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Fleet Delivery Section -->
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </details>
+  </div>
+  
+  <script>
+    function formatDate(date) {
+        const options = { day: '2-digit', month: 'short' };
+        return date.toLocaleDateString('en-US', options);
+    }
+  
+    function adjustForWeekend(date) {
+        const day = date.getDay();
+        if (day === 6) { // Saturday
+            date.setDate(date.getDate() + 2);
+        } else if (day === 0) { // Sunday
+            date.setDate(date.getDate() + 1);
+        }
+        return date;
+    }
+  
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const orderPlacedDate = new Date(today);
+        let orderDispatchesDate = new Date(today);
+        let orderDeliveredDate = new Date(today);
+  
+        // Check if the current time is past 12:00 PM
+        if (today.getHours() >= 12) {
+            orderDispatchesDate.setDate(orderDispatchesDate.getDate() + 1);
+            orderDeliveredDate.setDate(orderDeliveredDate.getDate() + 1);
+        }
+  
+        // Adjust for weekends for dispatch
+        adjustForWeekend(orderDispatchesDate);
+  
+        // Adjust delivery date based on dispatch date
+        orderDeliveredDate = new Date(orderDispatchesDate);
+        orderDeliveredDate.setDate(orderDeliveredDate.getDate() + 1);
+        adjustForWeekend(orderDeliveredDate);
+  
+        // Parcel Delivery Dates
+        const parcelOrderPlacedElement = document.getElementById('parcel-order-placed-date');
+        const parcelOrderDispatchesElement = document.getElementById('parcel-order-dispatches-date');
+        const parcelOrderDeliveredElement = document.getElementById('parcel-order-delivered-date');
+  
+        if (parcelOrderPlacedElement && parcelOrderDispatchesElement && parcelOrderDeliveredElement) {
+            parcelOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+            parcelOrderDispatchesElement.innerHTML = `<p>${formatDate(orderDispatchesDate)}<br>Order dispatches</p>`;
+            parcelOrderDeliveredElement.innerHTML = `<p>${formatDate(orderDeliveredDate)}<br>Delivered!</p>`;
+        }
+  
+        // Pallet Delivery Timeline
+        let palletDispatchesDate = new Date(today);
+        let palletDeliveredDate = new Date(today);
+  
+        // Check if the current time is past 12:00 PM
+        if (today.getHours() >= 12) {
+            palletDispatchesDate.setDate(palletDispatchesDate.getDate() + 1);
+            palletDeliveredDate.setDate(palletDeliveredDate.getDate() + 1);
+        }
+  
+        // Adjust for weekends for dispatch
+        palletDispatchesDate = adjustForWeekend(palletDispatchesDate);
+  
+        // Adjust delivery date based on dispatch date
+        palletDeliveredDate = new Date(palletDispatchesDate);
+        // Randomize between 2-4 days for delivery
+        const deliveryDays = Math.floor(Math.random() * 3) + 1;
+        palletDeliveredDate.setDate(palletDeliveredDate.getDate() + deliveryDays);
+        palletDeliveredDate = adjustForWeekend(palletDeliveredDate);
+  
+        // Update the Pallet Delivery Timeline
+        const palletOrderPlacedElement = document.getElementById('pallet-order-placed-date');
+        const palletOrderDispatchesElement = document.getElementById('pallet-order-dispatches-date');
+        const palletOrderDeliveredElement = document.getElementById('pallet-order-delivered-date');
+  
+        if (palletOrderPlacedElement && palletOrderDispatchesElement && palletOrderDeliveredElement) {
+            palletOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+            palletOrderDispatchesElement.innerHTML = `<p>${formatDate(palletDispatchesDate)}<br>Order dispatches</p>`;
+            palletOrderDeliveredElement.innerHTML = `<p>${formatDate(palletDeliveredDate)}<br>Delivered!</p>`;
+        }
+  
+        let fleetDispatchesDate = new Date(today);
+        let fleetDeliveredDate = new Date(today);
+  
+        if (today.getHours() >= 12) {
+            fleetDispatchesDate.setDate(fleetDispatchesDate.getDate() + 1);
+            fleetDeliveredDate.setDate(fleetDeliveredDate.getDate() + 1);
+        }
+  
+        fleetDispatchesDate = adjustForWeekend(fleetDispatchesDate);
+  
+        fleetDeliveredDate = new Date(fleetDispatchesDate);
+      
+        const fleetDeliveryDays = Math.floor(Math.random() * 4) + 7;
+        fleetDeliveredDate.setDate(fleetDeliveredDate.getDate() + fleetDeliveryDays);
+        fleetDeliveredDate = adjustForWeekend(fleetDeliveredDate);
+  
+        const fleetOrderPlacedElement = document.getElementById('fleet-order-placed-date');
+        const fleetOrderDispatchesElement = document.getElementById('fleet-order-dispatches-date');
+        const fleetOrderDeliveredElement = document.getElementById('fleet-order-delivered-date');
+  
+        if (fleetOrderPlacedElement && fleetOrderDispatchesElement && fleetOrderDeliveredElement) {
+            if (document.querySelector('img[alt="confidence"]') && document.querySelector('img[alt="confidence"]').src.includes('fuel-del-icon')) {
+                fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
+                fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
+            } else {
+                fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
+                fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
+            }
+        }
+    });
+  </script>
