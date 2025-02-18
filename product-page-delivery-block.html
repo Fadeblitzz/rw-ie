@@ -458,7 +458,7 @@
                             <img src="https://cdn.shopify.com/s/files/1/0561/5901/0886/files/parcel-icon.png?v=1720108731" alt="confidence" style="width: 10%; max-width: 100px; height: auto; margin-right: 10px;">
                             <div>
                                 <strong>Parcel Delivery</strong><br>
-                                For Small Items or Christmas Products<br> This option is free and takes 4-6 working days.
+                                For Small Items or Christmas Products<br> This option is free and takes 1-2 working days.
                             </div>
                         </div>
                         <!-- Delivery Timeline for Parcel Delivery -->
@@ -712,113 +712,113 @@
   </div>
   
   <script>
+    function addBusinessDays(daysToAdd) {
+      let result = new Date();
+      let addedDays = 0;
+  
+      while (addedDays < daysToAdd) {
+          result.setDate(result.getDate() + 1); // Move to next day
+          let dayOfWeek = result.getDay(); // Get the day (0 = Sunday, 6 = Saturday)
+  
+          if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip weekends
+              addedDays++;
+          }
+      }
+      return result;
+    }
+  
     function formatDate(date) {
         const options = { day: '2-digit', month: 'short' };
         return date.toLocaleDateString('en-US', options);
     }
-  
-    function adjustForWeekend(date) {
-        const day = date.getDay();
-        if (day === 6) { // Saturday
-            date.setDate(date.getDate() + 2);
-        } else if (day === 0) { // Sunday
-            date.setDate(date.getDate() + 1);
-        }
-        return date;
-    }
-  
+
     document.addEventListener('DOMContentLoaded', function() {
         const today = new Date();
         const orderPlacedDate = new Date(today);
-        let orderDispatchesDate = new Date(today);
-        let orderDeliveredDate = new Date(today);
+        
+        let addParcelDel = () => {
+            let orderDispatches = 0;
   
-        // Check if the current time is past 12:00 PM
-        if (today.getHours() >= 12) {
-            orderDispatchesDate.setDate(orderDispatchesDate.getDate() + 1);
-            orderDeliveredDate.setDate(orderDeliveredDate.getDate() + 1);
-        }
+            // Check if the current time is past 12:00 PM
+            if (today.getHours() >= 12) {
+                orderDispatches++;
+            }
   
-        // Adjust for weekends for dispatch
-        adjustForWeekend(orderDispatchesDate);
+            // Adjust for weekends for dispatch
+            let parcelDispatchDate = addBusinessDays(orderDispatches)
+
+            // Randomize between 2-3 days for delivery
+            let deliveryDays = Math.floor(Math.random() * 2) + 2;
+            let parcelDeliveryDate = addBusinessDays(deliveryDays + orderDispatches);
+
+            // Parcel Delivery Dates
+            const parcelOrderPlacedElement = document.getElementById('parcel-order-placed-date');
+            const parcelOrderDispatchesElement = document.getElementById('parcel-order-dispatches-date');
+            const parcelOrderDeliveredElement = document.getElementById('parcel-order-delivered-date');
   
-        // Adjust delivery date based on dispatch date
-        orderDeliveredDate = new Date(orderDispatchesDate);
-        orderDeliveredDate.setDate(orderDeliveredDate.getDate() + 1);
-        adjustForWeekend(orderDeliveredDate);
-  
-        // Parcel Delivery Dates
-        const parcelOrderPlacedElement = document.getElementById('parcel-order-placed-date');
-        const parcelOrderDispatchesElement = document.getElementById('parcel-order-dispatches-date');
-        const parcelOrderDeliveredElement = document.getElementById('parcel-order-delivered-date');
-  
-        if (parcelOrderPlacedElement && parcelOrderDispatchesElement && parcelOrderDeliveredElement) {
-            parcelOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
-            parcelOrderDispatchesElement.innerHTML = `<p>${formatDate(orderDispatchesDate)}<br>Order dispatches</p>`;
-            parcelOrderDeliveredElement.innerHTML = `<p>${formatDate(orderDeliveredDate)}<br>Delivered!</p>`;
-        }
-  
-        // Pallet Delivery Timeline
-        let palletDispatchesDate = new Date(today);
-        let palletDeliveredDate = new Date(today);
-  
-        // Check if the current time is past 12:00 PM
-        if (today.getHours() >= 12) {
-            palletDispatchesDate.setDate(palletDispatchesDate.getDate() + 1);
-            palletDeliveredDate.setDate(palletDeliveredDate.getDate() + 1);
-        }
-  
-        // Adjust for weekends for dispatch
-        palletDispatchesDate = adjustForWeekend(palletDispatchesDate);
-  
-        // Adjust delivery date based on dispatch date
-        palletDeliveredDate = new Date(palletDispatchesDate);
-        // Randomize between 2-4 days for delivery
-        const deliveryDays = Math.floor(Math.random() * 3) + 1;
-        palletDeliveredDate.setDate(palletDeliveredDate.getDate() + deliveryDays);
-        palletDeliveredDate = adjustForWeekend(palletDeliveredDate);
-  
-        // Update the Pallet Delivery Timeline
-        const palletOrderPlacedElement = document.getElementById('pallet-order-placed-date');
-        const palletOrderDispatchesElement = document.getElementById('pallet-order-dispatches-date');
-        const palletOrderDeliveredElement = document.getElementById('pallet-order-delivered-date');
-  
-        if (palletOrderPlacedElement && palletOrderDispatchesElement && palletOrderDeliveredElement) {
-            palletOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
-            palletOrderDispatchesElement.innerHTML = `<p>${formatDate(palletDispatchesDate)}<br>Order dispatches</p>`;
-            palletOrderDeliveredElement.innerHTML = `<p>${formatDate(palletDeliveredDate)}<br>Delivered!</p>`;
-        }
-  
-        let fleetDispatchesDate = new Date(today);
-        let fleetDeliveredDate = new Date(today);
-  
-        if (today.getHours() >= 12) {
-            fleetDispatchesDate.setDate(fleetDispatchesDate.getDate() + 1);
-            fleetDeliveredDate.setDate(fleetDeliveredDate.getDate() + 1);
-        }
-  
-        fleetDispatchesDate = adjustForWeekend(fleetDispatchesDate);
-  
-        fleetDeliveredDate = new Date(fleetDispatchesDate);
-      
-        const fleetDeliveryDays = Math.floor(Math.random() * 4) + 7;
-        fleetDeliveredDate.setDate(fleetDeliveredDate.getDate() + fleetDeliveryDays);
-        fleetDeliveredDate = adjustForWeekend(fleetDeliveredDate);
-  
-        const fleetOrderPlacedElement = document.getElementById('fleet-order-placed-date');
-        const fleetOrderDispatchesElement = document.getElementById('fleet-order-dispatches-date');
-        const fleetOrderDeliveredElement = document.getElementById('fleet-order-delivered-date');
-  
-        if (fleetOrderPlacedElement && fleetOrderDispatchesElement && fleetOrderDeliveredElement) {
-            if (document.querySelector('img[alt="confidence"]') && document.querySelector('img[alt="confidence"]').src.includes('fuel-del-icon')) {
-                fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
-                fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
-                fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
-            } else {
-                fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
-                fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
-                fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
+            if (parcelOrderPlacedElement && parcelOrderDispatchesElement && parcelOrderDeliveredElement) {
+                parcelOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                parcelOrderDispatchesElement.innerHTML = `<p>${formatDate(parcelDispatchDate)}<br>Order dispatches</p>`;
+                parcelOrderDeliveredElement.innerHTML = `<p>${formatDate(parcelDeliveryDate)}<br>Delivered!</p>`;
             }
         }
+        addParcelDel();
+
+        let addPalletDel = () => {
+            // Pallet Dispatches Zero means Today
+            let palletDispatches = 0;
+
+            // Check if the current time is past 12:00 PM
+            if (today.getHours() >= 12) {
+                palletDispatches++;
+            }
+            // Adjust for weekends for dispatch
+            let palletDispatchesDate = addBusinessDays(palletDispatches)
+
+            // Randomize between 4-5 days for delivery
+            let deliveryDays = Math.floor(Math.random() * 2) + 4;
+            let palletDeliveryDate = addBusinessDays(deliveryDays + palletDispatches);
+  
+            // Update the Pallet Delivery Timeline
+            const palletOrderPlacedElement = document.getElementById('pallet-order-placed-date');
+            const palletOrderDispatchesElement = document.getElementById('pallet-order-dispatches-date');
+            const palletOrderDeliveredElement = document.getElementById('pallet-order-delivered-date');
+  
+            if (palletOrderPlacedElement && palletOrderDispatchesElement && palletOrderDeliveredElement) {
+                palletOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                palletOrderDispatchesElement.innerHTML = `<p>${formatDate(palletDispatchesDate)}<br>Order dispatches</p>`;
+                palletOrderDeliveredElement.innerHTML = `<p>${formatDate(palletDeliveryDate)}<br>Delivered!</p>`;
+            }
+        }
+        addPalletDel()
+
+        let addFleetDel = () => {
+            let fleetDispatches = 0;
+
+            if (today.getHours() >= 12) {
+                fleetDispatches++;
+            }
+            let fleetDispatchesDate = addBusinessDays(fleetDispatches)
+            // Randomize between 8-10 days for delivery
+            let deliveryDays = Math.floor(Math.random() * 3) + 8;
+            let  fleetDeliveredDate = addBusinessDays(deliveryDays + fleetDispatches);
+  
+            const fleetOrderPlacedElement = document.getElementById('fleet-order-placed-date');
+            const fleetOrderDispatchesElement = document.getElementById('fleet-order-dispatches-date');
+            const fleetOrderDeliveredElement = document.getElementById('fleet-order-delivered-date');
+  
+            if (fleetOrderPlacedElement && fleetOrderDispatchesElement && fleetOrderDeliveredElement) {
+                if (document.querySelector('img[alt="confidence"]') && document.querySelector('img[alt="confidence"]').src.includes('fuel-del-icon')) {
+                    fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                    fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
+                    fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
+                } else {
+                    fleetOrderPlacedElement.innerHTML = `<p>${formatDate(orderPlacedDate)}<br>Order placed</p>`;
+                    fleetOrderDispatchesElement.innerHTML = `<p>${formatDate(fleetDispatchesDate)}<br>Order dispatches</p>`;
+                    fleetOrderDeliveredElement.innerHTML = `<p>${formatDate(fleetDeliveredDate)}<br>Delivered!</p>`;
+                }
+            }
+        }
+        addFleetDel();
     });
   </script>
